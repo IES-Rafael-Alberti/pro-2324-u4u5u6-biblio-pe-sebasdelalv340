@@ -1,8 +1,5 @@
 package org.pebiblioteca
 
-/**
- * Contiene los estados de los libros
- */
 enum class TIPOESTADO {
     PRESTADO, DISPONIBLE
 }
@@ -16,13 +13,15 @@ enum class TIPOESTADO {
  * @property tematica Temática del libro
  * @property estado Estado del libro
  */
-data class Libro(
-    var id: Int,
-    val titulo: String,
+class Libro(
+    id: Int,
+    titulo: String,
     val autor: String,
     val anioPublicacion: Int,
     val tematica: String,
-    var estado: TIPOESTADO = TIPOESTADO.DISPONIBLE) {
+    estado: TIPOESTADO = TIPOESTADO.DISPONIBLE
+
+): Prestable, ElementoBiblioteca(id, titulo, estado) {
 
     init {
         require(id in 0..100) {"El id no puede estar vacío"}
@@ -30,4 +29,13 @@ data class Libro(
         require(autor.isNotEmpty()) {"El autor no puede estar vacío"}
         require(anioPublicacion in 1..2024) {"El año de publicación debe ser entre 2001 y 2024"}
     }
+
+    override fun prestar() {}
+
+    override fun devolver() {}
+
+    override fun toString(): String {
+        return "Id: $id, título: $titulo, autor: $autor, año de publicación: $anioPublicacion, temática: $tematica y estado: $estado."
+    }
+
 }

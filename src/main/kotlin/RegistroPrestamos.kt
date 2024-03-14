@@ -2,23 +2,23 @@ package org.pebiblioteca
 
 class RegistroPrestamos(private var registroPrestamosActuales: MutableList<Prestamo> = mutableListOf(),
                         private var historialPrestamos: MutableList<Prestamo> = mutableListOf()
-) {
+): IGestorPrestamos {
 
 
-    fun registrarPrestamo(prestamo: Prestamo) {
+    override fun registrarPrestamo(prestamo: Prestamo) {
         registroPrestamosActuales.add(prestamo)
         historialPrestamos.add(prestamo)
     }
 
-    fun devolverLibro(prestamo: Prestamo) {
+    override fun devolverLibro(prestamo: Prestamo) {
         registroPrestamosActuales.remove(prestamo)
     }
 
-    fun consultarHistorialPorLibro(libroConsulta: Libro) {
-        historialPrestamos.filter { it.libro == libroConsulta}
+    override fun consultarHistorialPorElemento(elemento: ElementoBiblioteca) {
+        historialPrestamos.filter { it.elementoBiblioteca == elemento}
     }
 
-    fun consultarHistorialPorUsuario(usuarioConsulta: Usuario) {
+    override fun consultarHistorialPorUsuario(usuarioConsulta: Usuario) {
         historialPrestamos.filter { it.usuario == usuarioConsulta }
     }
 }

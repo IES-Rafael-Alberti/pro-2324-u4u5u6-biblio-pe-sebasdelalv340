@@ -3,33 +3,33 @@ package org.pebiblioteca
 import javax.xml.catalog.Catalog
 
 
-class GestorBiblioteca(var catalogo: MutableList<Libro> = mutableListOf(),
-                       val utilidadesBiblioteca: UtilidadesBiblioteca
+class GestorBiblioteca(var catalogo: Catalogo,
+                       val utilidadesBiblioteca: UtilidadesBiblioteca,
 ) {
 
-    fun agregarLibro(libro: Libro) {
-        libro.id = utilidadesBiblioteca.generarIdentificadorUnico()
-        catalogo.add(libro)
+    fun agregarLibro(elemento: ElementoBiblioteca) {
+        elemento.id = utilidadesBiblioteca.generarIdentificadorUnico()
+        catalogo.agregarLibro(elemento)
     }
 
-    fun eliminarLibro(libro: Libro) {
-        catalogo.remove(libro)
+    fun eliminarLibro(elemento: ElementoBiblioteca) {
+        catalogo.eliminarLibro(elemento)
     }
 
-    fun registrarPrestamo(libro: Libro, registroPrestamos: RegistroPrestamos, prestamo: Prestamo) {
-        if (libro.estado == TIPOESTADO.DISPONIBLE) {
-            libro.estado = TIPOESTADO.PRESTADO
-            registroPrestamos.registrarPrestamo(prestamo)
+    fun registrarPrestamo(gestorPrestamos: IGestorPrestamos, prestamo: Prestamo) {
+        if (prestamo.elementoBiblioteca.estado == TIPOESTADO.DISPONIBLE) {
+            prestamo.elementoBiblioteca.estado = TIPOESTADO.PRESTADO
+            gestorPrestamos.registrarPrestamo(prestamo)
         }
     }
 
-    fun devolverLibro(libro: Libro, registroPrestamos: RegistroPrestamos, prestamo: Prestamo) {
-        libro.estado = TIPOESTADO.DISPONIBLE
-        registroPrestamos.devolverLibro(prestamo)
+    fun devolverLibro(gestorPrestamos: IGestorPrestamos, prestamo: Prestamo) {
+        prestamo.elementoBiblioteca.estado = TIPOESTADO.DISPONIBLE
+        gestorPrestamos.devolverLibro(prestamo)
     }
 
     fun consultarDisponibilidad(libro: Libro): Boolean {
-        val libroEncontrado = catalogo.find { libro.estado == TIPOESTADO.DISPONIBLE }
+        val libroEncontrado = catalogo.catalogoElementosBiblioteca.find { libro.estado == TIPOESTADO.DISPONIBLE }
         return if ( libroEncontrado != null) {
             true
         } else {
@@ -38,15 +38,15 @@ class GestorBiblioteca(var catalogo: MutableList<Libro> = mutableListOf(),
     }
 
     fun mostrarTodos() {
-        catalogo.forEach { it.toString() }
+        catalogo.catalogoElementosBiblioteca.forEach { it.toString() }
     }
 
     fun mostrarDisponibles() {
-        catalogo.filter {it.estado == TIPOESTADO.DISPONIBLE}
+        catalogo.catalogoElementosBiblioteca.filter {it.estado == TIPOESTADO.DISPONIBLE}
     }
 
-    fun consultarHistorial(registroPrestamos: RegistroPrestamos, libro: Libro, usuario: Usuario) {
-        registroPrestamos.consultarHistorialPorLibro(libro)
+    fun consultarHistorial(registroPrestamos: RegistroPrestamos, elemento: ElementoBiblioteca, usuario: Usuario) {
+        registroPrestamos.consultarHistorialPorElemento(elemento)
         registroPrestamos.consultarHistorialPorUsuario(usuario)
 
     }

@@ -5,30 +5,29 @@ package org.pebiblioteca
 
 fun main() {
 
-    val libro1 = Libro(0, "Programar en kotlin", "Diego Cano", 2024, "Programación")
-    val libro2 = Libro(0, "Programar en java", "Alfonso Diaz", 2015, "Java")
-    val libro3 = Libro(0, "Volando voy", "Miguel Hernández", 2011, "Clásico")
-    var listaLibros = mutableListOf(libro1, libro2, libro3)
+    val libro = Libro(0, "Programar en kotlin", "Diego Cano",2024, "Progamación")
+    val revista = Revista(0, "Rolling Stone", TIPOESTADO.DISPONIBLE)
+    val dvd = DVD(0, "La roca", TIPOESTADO.PRESTADO, "Michael Bay")
+
+
 
     val usuario1 = Usuario(0, "Sebas")
     val usuario2 = Usuario(0, "Alberto")
     val usuario3 = Usuario(0, "Rosa")
     val usuario4 = Usuario(0, "Teresa")
 
-    val prestamo = Prestamo(libro1, usuario1)
+    val prestamo = Prestamo(dvd, usuario2)
 
     val utilidadesBiblioteca = UtilidadesBiblioteca()
     val registroPrestamos = RegistroPrestamos()
-    val gestorBiblioteca = GestorBiblioteca(listaLibros, utilidadesBiblioteca)
+    val catalogo = Catalogo()
+    val gestorBiblioteca = GestorBiblioteca(catalogo, utilidadesBiblioteca)
 
-    // Operaciones de préstamo y devolución
-    gestorBiblioteca.registrarPrestamo(libro1, registroPrestamos, prestamo)
-    gestorBiblioteca.devolverLibro(libro2, registroPrestamos, prestamo)
+    // Operación de préstamo
+    gestorBiblioteca.registrarPrestamo(registroPrestamos, prestamo)
 
-    // Consultar historial
-    gestorBiblioteca.consultarHistorial(registroPrestamos, libro1, usuario1)
+    // Operación de devolución
+    gestorBiblioteca.devolverLibro(registroPrestamos, prestamo)
 
-    // Consulta de los datos de libro y usuario a través de métodos públicos
-    libro2.toString()
-    usuario3.toString()
+
 }

@@ -1,6 +1,6 @@
 package org.pebiblioteca
 
-class Prestamo(var libro: Libro,
+class Prestamo(var elementoBiblioteca: ElementoBiblioteca,
                var usuario: Usuario
 ) {
 }
