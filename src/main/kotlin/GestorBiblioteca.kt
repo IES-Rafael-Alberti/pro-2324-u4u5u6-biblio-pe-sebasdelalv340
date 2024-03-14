@@ -9,11 +9,11 @@ class GestorBiblioteca(var catalogo: Catalogo,
 
     fun agregarLibro(elemento: ElementoBiblioteca) {
         elemento.id = utilidadesBiblioteca.generarIdentificadorUnico()
-        catalogo.agregarLibro(elemento)
+        catalogo.agregarElementoBiblioteca(elemento)
     }
 
     fun eliminarLibro(elemento: ElementoBiblioteca) {
-        catalogo.eliminarLibro(elemento)
+        catalogo.eliminarElementoBiblioteca(elemento)
     }
 
     fun registrarPrestamo(gestorPrestamos: IGestorPrestamos, prestamo: Prestamo) {
@@ -28,9 +28,9 @@ class GestorBiblioteca(var catalogo: Catalogo,
         gestorPrestamos.devolverLibro(prestamo)
     }
 
-    fun consultarDisponibilidad(libro: Libro): Boolean {
-        val libroEncontrado = catalogo.catalogoElementosBiblioteca.find { libro.estado == TIPOESTADO.DISPONIBLE }
-        return if ( libroEncontrado != null) {
+    fun consultarDisponibilidad(elemento: ElementoBiblioteca): Boolean {
+        val elementoConsulta = catalogo.buscarElementosBiblioteca(elemento)
+        return if (elementoConsulta?.estado == TIPOESTADO.DISPONIBLE) {
             true
         } else {
             false
@@ -42,7 +42,7 @@ class GestorBiblioteca(var catalogo: Catalogo,
     }
 
     fun mostrarDisponibles() {
-        catalogo.catalogoElementosBiblioteca.filter {it.estado == TIPOESTADO.DISPONIBLE}
+
     }
 
     fun consultarHistorial(registroPrestamos: RegistroPrestamos, elemento: ElementoBiblioteca, usuario: Usuario) {
