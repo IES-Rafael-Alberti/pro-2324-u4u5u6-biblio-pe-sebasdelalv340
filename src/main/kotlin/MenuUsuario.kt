@@ -22,7 +22,7 @@ class MenuUsuario {
                 2 -> gestorBiblioteca.eliminarLibro(libro)
                 3 -> gestorBiblioteca.registrarPrestamo(libro)
                 4 -> gestorBiblioteca.devolverLibro(libro)
-                5 -> gestorBiblioteca.mostrarEstado(libro)
+                5 -> gestorBiblioteca.mostrarTodos()
                 6 -> Consola.enviar("Hasta luego")
                 else -> Consola.enviar("Opción no válida")
             }

@@ -4,7 +4,6 @@ import javax.xml.catalog.Catalog
 
 
 class GestorBiblioteca(var catalogo: MutableList<Libro> = mutableListOf(),
-                       var registroPrestamos: MutableList<String> = mutableListOf(),
                        val utilidadesBiblioteca: UtilidadesBiblioteca
 ) {
 
@@ -17,14 +16,16 @@ class GestorBiblioteca(var catalogo: MutableList<Libro> = mutableListOf(),
         catalogo.remove(libro)
     }
 
-    fun registrarPrestamo(libro: Libro) {
+    fun registrarPrestamo(libro: Libro, registroPrestamos: RegistroPrestamos, prestamo: Prestamo) {
         if (libro.estado == TIPOESTADO.DISPONIBLE) {
             libro.estado = TIPOESTADO.PRESTADO
+            registroPrestamos.registrarPrestamo(prestamo)
         }
     }
 
-    fun devolverLibro(libro: Libro) {
+    fun devolverLibro(libro: Libro, registroPrestamos: RegistroPrestamos, prestamo: Prestamo) {
         libro.estado = TIPOESTADO.DISPONIBLE
+        registroPrestamos.devolverLibro(prestamo)
     }
 
     fun consultarDisponibilidad(libro: Libro): Boolean {
@@ -36,10 +37,18 @@ class GestorBiblioteca(var catalogo: MutableList<Libro> = mutableListOf(),
         }
     }
 
-    fun mostrarEstado(libro: Libro) {
-        if (consultarDisponibilidad(libro)) {
-            Consola.enviar(libro.toString())
-        }
+    fun mostrarTodos() {
+        catalogo.forEach { it.toString() }
+    }
+
+    fun mostrarDisponibles() {
+        catalogo.filter {it.estado == TIPOESTADO.DISPONIBLE}
+    }
+
+    fun consultarHistorial(registroPrestamos: RegistroPrestamos, libro: Libro, usuario: Usuario) {
+        registroPrestamos.consultarHistorialPorLibro(libro)
+        registroPrestamos.consultarHistorialPorUsuario(usuario)
+
     }
 
 }
