@@ -3,14 +3,17 @@ package org.pebiblioteca
 
 
 
-
-
 fun main() {
-    val gestorBiblioteca = GestorBiblioteca()
 
-    val libro1 = Libro(1, "Programar en kotlin", "Diego Cano", 2024, "Programación")
-    val libro2 = Libro(2, "Programar en java", "Alfonso Diaz", 2015, "Java")
-    val libro3 = Libro(3, "Volando voy", "Miguel Hernández", 2011, "Clásico")
+    val libro1 = Libro(0, "Programar en kotlin", "Diego Cano", 2024, "Programación")
+    val libro2 = Libro(0, "Programar en java", "Alfonso Diaz", 2015, "Java")
+    val libro3 = Libro(0, "Volando voy", "Miguel Hernández", 2011, "Clásico")
+
+    var listaLibros = mutableListOf(libro1, libro2, libro3)
+    var registroPrestamo = mutableListOf<String>()
+
+    val utilidadesBiblioteca = UtilidadesBiblioteca()
+    val gestorBiblioteca = GestorBiblioteca(listaLibros, registroPrestamo, utilidadesBiblioteca)
 
     // Agrego los libros
     gestorBiblioteca.agregarLibro(libro1)

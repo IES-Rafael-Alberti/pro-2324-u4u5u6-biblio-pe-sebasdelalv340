@@ -16,12 +16,13 @@ enum class TIPOESTADO {
  * @property tematica Temática del libro
  * @property estado Estado del libro
  */
-data class Libro(val id: Int,
-                 val titulo: String,
-                 val autor: String,
-                 val anioPublicacion: Int,
-                 val tematica: String,
-                 var estado: TIPOESTADO = TIPOESTADO.DISPONIBLE) {
+data class Libro(
+    var id: Int,
+    val titulo: String,
+    val autor: String,
+    val anioPublicacion: Int,
+    val tematica: String,
+    var estado: TIPOESTADO = TIPOESTADO.DISPONIBLE) {
 
     init {
         require(id in 0..100) {"El id no puede estar vacío"}

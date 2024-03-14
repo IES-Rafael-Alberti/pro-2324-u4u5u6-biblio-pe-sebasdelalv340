@@ -2,11 +2,14 @@ package org.pebiblioteca
 
 import javax.xml.catalog.Catalog
 
+
 class GestorBiblioteca(var catalogo: MutableList<Libro> = mutableListOf(),
-                       var registroPrestamos: MutableList<String> = mutableListOf()
+                       var registroPrestamos: MutableList<String> = mutableListOf(),
+                       val utilidadesBiblioteca: UtilidadesBiblioteca
 ) {
 
     fun agregarLibro(libro: Libro) {
+        libro.id = utilidadesBiblioteca.generarIdentificadorUnico()
         catalogo.add(libro)
     }
 
